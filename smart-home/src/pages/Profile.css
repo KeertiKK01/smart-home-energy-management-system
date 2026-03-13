@@ -1,0 +1,96 @@
+/* =========================
+   SOFT PREMIUM GRADIENT
+========================= */
+
+.display-bg-gradient {
+  background: linear-gradient(135deg, #f1f3f8, #ffffff);
+  min-height: 100vh;
+  transition: background 0.4s ease;
+  padding: 20px;
+}
+
+
+/* =========================
+   BUTTON STYLE IMPROVED
+========================= */
+
+.scale-btn {
+  color: #ffffff;
+  transition: all 0.25s ease-in-out;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+
+/* Hover Effect */
+
+.scale-btn:hover {
+  color: #ffc107; /* Bootstrap warning */
+  transform: scale(1.05);
+  text-shadow: 0 4px 12px rgba(255, 193, 7, 0.5);
+}
+
+
+/* Smooth Active Press */
+
+.scale-btn:active {
+  transform: scale(0.97);
+}
+
+
+/* =========================
+   PROFILE CARD STYLE
+========================= */
+
+.profile-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: all 0.25s ease;
+}
+
+
+/* Card Hover */
+
+.profile-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+}
+
+
+/* =========================
+   PROFILE INFORMATION
+========================= */
+
+.profile-info p {
+  margin-bottom: 8px;
+  font-size: 15px;
+  color: #444;
+}
+
+.profile-info strong {
+  color: #111;
+}
+
+
+/* =========================
+   PROFILE TITLE
+========================= */
+
+.profile-title {
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+
+/* =========================
+   PROFILE IMAGE CARD
+========================= */
+
+.upload-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,8 @@
+.generate-btn {
+    background-color: var(--bs-secondary);
+    color: var(--bs-white);
+}
+.generate-btn:hover {
+    color: var(--bs-warning);
+    transform: scale(1.01)
+}

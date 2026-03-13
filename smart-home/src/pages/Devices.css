@@ -1,0 +1,104 @@
+.devices-container{
+padding:20px;
+background:#f5f7fb;
+min-height:100vh;
+}
+
+/* grid layout */
+
+.device-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+gap:20px;
+}
+
+/* device card */
+
+.device-card{
+background:white;
+border-radius:20px;
+padding:20px;
+box-shadow:0 6px 20px rgba(0,0,0,0.08);
+transition:0.25s;
+cursor:pointer;
+}
+
+.device-card:hover{
+transform:translateY(-4px);
+box-shadow:0 12px 30px rgba(0,0,0,0.15);
+}
+
+/* icon */
+
+.device-icon{
+font-size:40px;
+margin-bottom:10px;
+color:#5f63ff;
+}
+
+/* device name */
+
+.device-name{
+font-weight:600;
+font-size:16px;
+}
+
+/* room text */
+
+.device-room{
+font-size:13px;
+color:gray;
+}
+
+/* switch */
+
+.switch{
+position:relative;
+display:inline-block;
+width:42px;
+height:22px;
+}
+
+.switch input{
+opacity:0;
+}
+
+.slider{
+position:absolute;
+cursor:pointer;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:#ccc;
+border-radius:34px;
+transition:.4s;
+}
+
+.slider:before{
+position:absolute;
+content:"";
+height:16px;
+width:16px;
+left:3px;
+bottom:3px;
+background:white;
+transition:.4s;
+border-radius:50%;
+}
+
+input:checked + .slider{
+background:#5f63ff;
+}
+
+input:checked + .slider:before{
+transform:translateX(20px);
+}
+
+/* add device button */
+
+.add-device-btn{
+border-radius:12px;
+padding:8px 18px;
+font-weight:500;
+}

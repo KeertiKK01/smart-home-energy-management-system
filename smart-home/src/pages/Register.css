@@ -1,0 +1,146 @@
+.register-wrapper {
+  min-height: 100vh;
+  background: #f4f3f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.register-container {
+  width: 1100px;
+  display: flex;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0px 25px 50px rgba(0,0,0,0.1);
+}
+
+/* LEFT */
+.register-left {
+  flex: 1;
+  background: white; /* Make full left side white */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-left img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: white;
+}
+.register-icon-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.register-icon{
+
+width:100px;
+
+margin-bottom:10px;
+
+}
+
+/* RIGHT */
+.register-right {
+  flex: 1;
+  padding: 50px;
+}
+
+.brand-bar {
+  background: #4a7ecc;
+  color: white;
+  text-align: center;
+  padding: 12px;
+  border-radius: 40px;
+  margin-bottom: 25px;
+  font-weight: bold;
+}
+
+.home-icon{
+  color:#ffffff;
+  font-size:22px;
+  margin-right:8px;
+}
+
+.form-title {
+  text-align: center;
+  color: #4a7ecc;
+  margin-bottom: 10px;
+}
+
+.error-text {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+
+.success-text {
+  text-align: center;
+  color: green;
+}
+
+form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  transition: 0.3s;
+}
+
+form input:focus {
+  border-color: #4a7ecc;
+  outline: none;
+}
+
+.row-2 {
+  display: flex;
+  gap: 10px;
+}
+
+.row-3 {
+  display: flex;
+  gap: 10px;
+}
+
+.password-box {
+  position: relative;
+  width: 100%;
+}
+
+.password-box span {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  cursor: pointer;
+}
+
+.register-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 40px;
+  border: none;
+  background: #4a7ecc;
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.register-btn:hover {
+  background: #0d6efd;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.login-link a {
+  color: #0d6efd;
+  font-weight: bold;
+}
