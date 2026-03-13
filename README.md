@@ -130,7 +130,7 @@ Frontend will start on:  http://localhost:3001
 
 **Keerti Kushwaha**
 
-🎓 Computer Science Student  
+🎓 MCA Student  
 📍 India  
 
 ---
