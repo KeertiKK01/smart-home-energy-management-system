@@ -113,7 +113,14 @@ Frontend will start on:  http://localhost:3001
 # 📸 Screenshots
 
 ## 🏠 Landing Page
-(Add screenshot here)
+<img width="1365" height="681" alt="image" src="https://github.com/user-attachments/assets/1d101c59-75df-422b-844d-387b28e5d53b" />
+
+##  Login Page 
+<img width="1096" height="645" alt="image" src="https://github.com/user-attachments/assets/fcccd671-59d8-4d9d-9802-4315559c2322" />
+
+## Register Page 
+<img width="1358" height="680" alt="image" src="https://github.com/user-attachments/assets/c9568712-00c5-4752-8fe9-fc095bb890d6" />
+
 
 ## 📊 Dashboard
 (Add screenshot here)
