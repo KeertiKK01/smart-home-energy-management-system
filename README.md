@@ -123,13 +123,21 @@ Frontend will start on:  http://localhost:3001
 
 
 ## 📊 Dashboard
-(Add screenshot here)
+<img width="1358" height="687" alt="Screenshot 2026-03-28 004158" src="https://github.com/user-attachments/assets/80d5cc06-3210-449e-bf76-1996c38903f0" />
+<img width="1365" height="687" alt="Screenshot 2026-03-28 004353" src="https://github.com/user-attachments/assets/8f74e89a-e668-4f6e-9df1-57b09acefde3" />
+
 
 ## 📱 Devices Page
-(Add screenshot here)
+<img width="1364" height="680" alt="Screenshot 2026-03-28 004336" src="https://github.com/user-attachments/assets/b954fd36-82d8-4193-930b-da17917c8609" />
+
 
 ## 👤 Profile Page
-(Add screenshot here)
+<img width="1365" height="684" alt="Screenshot 2026-03-28 004432" src="https://github.com/user-attachments/assets/2d0003f8-6ba2-4401-bac8-f2c9cb7c98be" />
+
+## Home Page 
+<img width="1358" height="687" alt="Screenshot 2026-03-28 004158" src="https://github.com/user-attachments/assets/d0109b2e-f73b-4236-832d-1a15d3fb4719" />
+
+
 
 ---
 
