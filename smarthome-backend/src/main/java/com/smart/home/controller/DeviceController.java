@@ -9,29 +9,32 @@ import com.smart.home.model.Device;
 import com.smart.home.service.DeviceService;
 
 @RestController
-@RequestMapping("/devices")
-@CrossOrigin(origins="*")
+@RequestMapping("/device") // 🔥 keep singular for clean API
+@CrossOrigin(origins = "*")
 public class DeviceController {
 
     @Autowired
     private DeviceService service;
 
-    // ADD DEVICE
+    /* ================= ADD DEVICE ================= */
+
     @PostMapping("/add/{userId}")
     public Device addDevice(@RequestBody Device device,
                             @PathVariable int userId){
 
-        return service.addDevice(device,userId);
+        return service.addDevice(device, userId);
     }
 
-    // GET USER DEVICES
+    /* ================= GET USER DEVICES ================= */
+
     @GetMapping("/user/{userId}")
     public List<Device> getUserDevices(@PathVariable int userId){
 
         return service.getUserDevices(userId);
     }
 
-    // DELETE DEVICE
+    /* ================= DELETE DEVICE ================= */
+
     @DeleteMapping("/{id}")
     public String deleteDevice(@PathVariable int id){
 

@@ -1,22 +1,27 @@
 package com.smart.home.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore; // 🔥 ADD THIS
 
 @Entity
-@Table(name="devices")
+@Table(name = "devices")
 public class Device {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String deviceName;
-    private String deviceType;
+    private String name;
+    private String type;
+    private String model;
     private String status;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
+    @JsonIgnore   // 🔥 VERY IMPORTANT FIX
     private User user;
+
+    // ===== GETTERS & SETTERS =====
 
     public int getId() {
         return id;
@@ -26,20 +31,28 @@ public class Device {
         this.id = id;
     }
 
-    public String getDeviceName() {
-        return deviceName;
+    public String getName() {
+        return name;
     }
 
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDeviceType() {
-        return deviceType;
+    public String getType() {
+        return type;
     }
 
-    public void setDeviceType(String deviceType) {
-        this.deviceType = deviceType;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public String getStatus() {

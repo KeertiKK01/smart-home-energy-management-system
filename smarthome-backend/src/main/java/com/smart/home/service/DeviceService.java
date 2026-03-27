@@ -19,23 +19,36 @@ public class DeviceService {
     @Autowired
     private UserRepository userRepo;
 
-    // ADD DEVICE
+    /* ================= ADD DEVICE ================= */
+
     public Device addDevice(Device device, int userId){
 
         User user = userRepo.findById(userId).orElse(null);
+
+        if(user == null){
+            throw new RuntimeException("User not found");
+        }
 
         device.setUser(user);
 
         return deviceRepo.save(device);
     }
 
-    // GET USER DEVICES
+    /* ================= GET USER DEVICES ================= */
+
     public List<Device> getUserDevices(int userId){
 
-        return deviceRepo.findByUserId(userId);
+        User user = userRepo.findById(userId).orElse(null);
+
+        if(user == null){
+            throw new RuntimeException("User not found");
+        }
+
+        return deviceRepo.findByUser(user); // 🔥 FIXED
     }
 
-    // DELETE DEVICE
+    /* ================= DELETE DEVICE ================= */
+
     public String deleteDevice(int id){
 
         deviceRepo.deleteById(id);

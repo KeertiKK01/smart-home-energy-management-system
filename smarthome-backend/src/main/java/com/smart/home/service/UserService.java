@@ -98,18 +98,23 @@ public class UserService {
     // ================= FORGOT PASSWORD - SEND OTP =================
     public String sendResetOtp(String email) {
 
+        System.out.println("EMAIL RECEIVED: " + email); // 🔥 ADD THIS
+
         if(email == null || email.trim().isEmpty())
             return "Email required";
 
         User user = repo.findByEmail(email.trim().toLowerCase()).orElse(null);
 
-        if(user == null)
+        if(user == null){
+            System.out.println("USER NOT FOUND ❌"); // 🔥 ADD THIS
             return "User not found";
+        }
 
         String otp = String.valueOf(new Random().nextInt(900000) + 100000);
 
-        user.setOtp(otp);
+        System.out.println("OTP GENERATED: " + otp); // 🔥 ADD THIS
 
+        user.setOtp(otp);
         repo.save(user);
 
         emailService.sendOtp(user.getEmail(), otp);

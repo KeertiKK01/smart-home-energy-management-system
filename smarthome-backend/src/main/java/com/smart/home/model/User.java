@@ -2,6 +2,7 @@ package com.smart.home.model;
 
 import jakarta.persistence.*;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore; // 🔥 ADD THIS
 
 @Entity
 @Table(name = "users",
@@ -34,8 +35,9 @@ public class User {
 
     private boolean verified;
 
-    // 🔗 Link devices with user
+    // 🔗 FIX HERE
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore   // 🔥 VERY IMPORTANT
     private List<Device> devices;
 
     // -------- GETTERS AND SETTERS --------
@@ -48,7 +50,6 @@ public class User {
         this.id = id;
     }
 
-
     public String getName() {
         return name;
     }
@@ -56,7 +57,6 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public String getEmail() {
         return email;
@@ -66,7 +66,6 @@ public class User {
         this.email = email;
     }
 
-
     public String getPhone() {
         return phone;
     }
@@ -74,7 +73,6 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
 
     public String getPassword() {
         return password;
@@ -84,7 +82,6 @@ public class User {
         this.password = password;
     }
 
-
     public String getOtp() {
         return otp;
     }
@@ -93,7 +90,6 @@ public class User {
         this.otp = otp;
     }
 
-
     public String getProfilePic() {
         return profilePic;
     }
@@ -101,7 +97,6 @@ public class User {
     public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
     }
-
 
     public boolean isVerified() {
         return verified;

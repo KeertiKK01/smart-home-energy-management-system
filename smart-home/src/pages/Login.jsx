@@ -26,8 +26,6 @@ try {
 
 const storedUser = JSON.parse(localStorage.getItem("user"));
 
-/* redirect only if valid user exists */
-
 if (storedUser && storedUser.id) {
 navigate("/dashboard/overview");
 }
@@ -75,9 +73,17 @@ password: formData.password
 
 const user = response.data;
 
-/* save logged user */
+/* 🔥 FIX: Normalize email (VERY IMPORTANT) */
+const normalizedUser = {
+...user,
+email: user.email.trim().toLowerCase()
+};
 
-localStorage.setItem("user", JSON.stringify(user));
+/* 🔥 DEBUG (optional but useful) */
+console.log("Logged User:", normalizedUser);
+
+/* ✅ SAVE USER ONLY (DO NOT CLEAR STORAGE) */
+localStorage.setItem("user", JSON.stringify(normalizedUser));
 
 navigate("/dashboard/overview");
 
@@ -195,4 +201,3 @@ Create an Account!
 };
 
 export default Login;
-

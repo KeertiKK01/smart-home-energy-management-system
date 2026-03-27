@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import {
 Chart as ChartJS,
 CategoryScale,
@@ -38,24 +39,35 @@ const [monthlyCost,setMonthlyCost] = useState(0);
 const [yearlyCost,setYearlyCost] = useState(0);
 
 
-/* ================= LOAD USER + DEVICE DATA ================= */
+/* ================= LOAD DATA FROM DB ================= */
 
 useEffect(()=>{
 
-const storedUser = JSON.parse(localStorage.getItem("user"));
+const loadData = async () => {
 
-if(storedUser){
-setUserName(storedUser.name);
+const user = JSON.parse(localStorage.getItem("user"));
+if (!user) return;
+
+setUserName(user.name);
+
+try {
+
+const res = await axios.get(
+`http://localhost:8081/device/user/${user.id}`
+);
+
+setDevices(res.data);
+calculateEnergy(res.data);
+
+} catch (err) {
+console.log(err);
 }
 
-const deviceList = JSON.parse(localStorage.getItem("devices")) || [];
+};
 
-setDevices(deviceList);
+loadData();
 
-calculateEnergy(deviceList);
-
-},[]);
-
+}, []);
 
 
 /* ================= ENERGY CALCULATION ================= */
@@ -65,7 +77,7 @@ const calculateEnergy = (deviceList) => {
 setTotalDevices(deviceList.length);
 
 const active = deviceList.filter(
-d => d?.enrolledStatus === "enabled"
+d => d?.status === "enabled"
 );
 
 setActiveDevices(active.length);
@@ -91,7 +103,6 @@ setMonthlyCost((total * 30 * rate).toFixed(2));
 setYearlyCost((total * 365 * rate).toFixed(2));
 
 };
-
 
 
 /* ================= CHART DATA ================= */
@@ -131,14 +142,11 @@ backgroundColor:"#f6c23e"
 };
 
 
-
 /* ================= UI ================= */
 
 return(
 
 <div className="dashboard-container container-fluid">
-
-{/* Welcome */}
 
 <div className="welcome-box mb-4">
 <h2>Welcome back {userName} 👋</h2>
@@ -215,8 +223,6 @@ return(
 devices.map((device,index)=>{
 
 const deviceName =
-device?.enDevName ||
-device?.deviceName ||
 device?.name ||
 device?.type ||
 "Smart Device";
@@ -227,7 +233,7 @@ const hours = 5;
 const energy = ((power * hours)/1000).toFixed(2);
 const energyPercent = Math.min(energy * 100,100);
 
-const status = device?.enrolledStatus === "enabled";
+const status = device?.status === "enabled";
 
 const name = deviceName.toLowerCase();
 
@@ -236,7 +242,6 @@ name.includes("light") ? "💡" :
 name.includes("fan") ? "🌀" :
 name.includes("ac") ? "❄️" :
 name.includes("tv") ? "📺" :
-name.includes("fridge") ? "🧊" :
 "🔌";
 
 return(

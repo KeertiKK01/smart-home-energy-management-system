@@ -17,50 +17,50 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 
-return (
+    return (
 
-<BrowserRouter>
+        <BrowserRouter>
 
-<Routes>
+        <Routes>
 
-{/* Landing */}
-<Route path="/" element={<LandingPage />} />
+            {/* Landing */}
+            <Route path="/" element={<LandingPage />} />
 
-{/* Public */}
-<Route path="/login" element={<Login />} />
-<Route path="/register" element={<Register />} />
-<Route path="/otp" element={<Otp />} />
-<Route path="/forgot-password" element={<ForgotPassword />} />
-<Route path="/verify-otp" element={<VerifyOtp />} />
+            {/* Public */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/otp" element={<Otp />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/verify-otp" element={<VerifyOtp />} />
 
-{/* Protected Layout */}
-<Route
-path="/dashboard/*"
-element={
-<ProtectedRoute>
-<Home />
-</ProtectedRoute>
-}
->
+            {/* Protected Layout */}
+            <Route
+                path="/dashboard/*"
+                element={
+                    <ProtectedRoute>
+                        <Home />
+                    </ProtectedRoute>
+                }
+            >
 
-<Route index element={<HomePage />} />
+            <Route index element={<HomePage />} />
 
-<Route path="overview" element={<Dashboard />} />
+            <Route path="overview" element={<Dashboard />} />
 
-<Route path="profile" element={<Profile />} />
+            <Route path="profile" element={<Profile />} />
 
-<Route path="device" element={<Devices />} />
+            <Route path="device" element={<Devices />} />
 
-</Route>
+        </Route>
 
-{/* Not found */}
-<Route path="*" element={<h1>Page Not Found</h1>} />
+        {/* Not found */}
+        <Route path="*" element={<h1>Page Not Found</h1>} />
 
-</Routes>
+        </Routes>
 
-</BrowserRouter>
+        </BrowserRouter>
 
-);
+    );
 
 }
 

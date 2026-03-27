@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.smart.home.model.Device;
+import com.smart.home.model.User;
 
-public interface DeviceRepository extends JpaRepository<Device,Integer>{
+public interface DeviceRepository extends JpaRepository<Device, Integer> {
 
-    List<Device> findByUserId(int userId);
+    // 🔥 correct method
+    List<Device> findByUser(User user);
 
 }

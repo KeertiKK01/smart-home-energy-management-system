@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import InnerLoadingPage from "./InnerLoadingPage";
 import { FaLightbulb, FaFan, FaSnowflake, FaTv } from "react-icons/fa";
@@ -8,7 +9,6 @@ const Devices = () => {
 
 const [isLoading, setIsLoading] = useState(true);
 const [show, setShow] = useState(false);
-
 const [enrolledDevices, setEnrolledDevices] = useState([]);
 
 const [deviceTypes] = useState(["Light","AC","Heater","Fan","TV"]);
@@ -17,100 +17,118 @@ const [deviceModels] = useState(["Model-X","Model-Y","Model-Z"]);
 const [deviceFormData, setDeviceFormData] = useState({
 enDevName: "",
 type: "",
-model: "",
-enrolledStatus: "enabled"
+model: ""
 });
 
-/* ================= LOAD DEVICES ================= */
+
+/* ================= LOAD DEVICES FROM DB ================= */
 
 useEffect(() => {
+
+const loadDevices = async () => {
 
 const user = JSON.parse(localStorage.getItem("user"));
 if (!user) return;
 
-const key = "devices_" + user.email;
-const savedDevices = JSON.parse(localStorage.getItem(key)) || [];
+try {
 
-setEnrolledDevices(savedDevices);
+const res = await axios.get(
+`http://localhost:8081/device/user/${user.id}`
+);
 
-setTimeout(() => setIsLoading(false), 500);
+setEnrolledDevices(res.data);
 
-}, []);
-
-/* ================= SAVE DEVICES ================= */
-
-useEffect(() => {
-
-if (!isLoading) {
-localStorage.setItem("devices", JSON.stringify(enrolledDevices));
+} catch (err) {
+console.log("Error loading devices:", err);
 }
 
-}, [enrolledDevices, isLoading]);
+setIsLoading(false);
+};
 
+loadDevices();
+
+}, []);
 
 
 /* ================= INPUT CHANGE ================= */
 
 const handleChange = (e) => {
-
 setDeviceFormData({
 ...deviceFormData,
 [e.target.name]: e.target.value
 });
-
 };
-
 
 
 /* ================= ADD DEVICE ================= */
 
-const handleSubmitButton = (e) => {
+const handleSubmitButton = async (e) => {
 
 e.preventDefault();
 
+const user = JSON.parse(localStorage.getItem("user"));
+
 const newDevice = {
-...deviceFormData,
-enDevID: Date.now()
+name: deviceFormData.enDevName,
+type: deviceFormData.type,
+model: deviceFormData.model,
+status: "enabled"
 };
 
-setEnrolledDevices(prev => [...prev, newDevice]);
+try {
+
+const res = await axios.post(
+`http://localhost:8081/device/add/${user.id}`,
+newDevice
+);
+
+// UI update
+setEnrolledDevices(prev => [...prev, res.data]);
+
+} catch (err) {
+console.log("Error adding device:", err);
+}
 
 setDeviceFormData({
 enDevName: "",
 type: "",
-model: "",
-enrolledStatus: "enabled"
+model: ""
 });
 
 setShow(false);
-
 };
-
 
 
 /* ================= DELETE DEVICE ================= */
 
-const handleDelete = (id) => {
+const handleDelete = async (id) => {
+
+try {
+
+await axios.delete(`http://localhost:8081/device/${id}`);
 
 setEnrolledDevices(prev =>
-prev.filter(device => device.enDevID !== id)
+prev.filter(device => device.id !== id)
 );
+
+} catch (err) {
+console.log("Error deleting:", err);
+}
 
 };
 
 
-
-/* ================= TOGGLE DEVICE ================= */
+/* ================= TOGGLE (UI ONLY) ================= */
 
 const toggleStatus = (id) => {
 
 setEnrolledDevices(prev =>
 prev.map(device =>
-device.enDevID === id
+device.id === id
 ? {
 ...device,
-enrolledStatus:
-device.enrolledStatus === "enabled"
+status:
+device.status === "enabled"
 ? "disabled"
 : "enabled"
 }
@@ -121,35 +139,20 @@ device.enrolledStatus === "enabled"
 };
 
 
-
 /* ================= DEVICE ICON ================= */
 
 const getDeviceIcon = (type) => {
-
 switch(type){
-
-case "Light":
-return <FaLightbulb/>
-
-case "Fan":
-return <FaFan/>
-
-case "AC":
-return <FaSnowflake/>
-
-case "TV":
-return <FaTv/>
-
-default:
-return "🔌"
+case "Light": return <FaLightbulb/>
+case "Fan": return <FaFan/>
+case "AC": return <FaSnowflake/>
+case "TV": return <FaTv/>
+default: return "🔌"
 }
-
-}
-
+};
 
 
 if (isLoading) return <InnerLoadingPage />;
-
 
 
 return (
@@ -157,13 +160,9 @@ return (
 <div className="devices-container">
 
 <div className="d-flex justify-content-between align-items-center mb-4">
-
 <h3>My Home Devices</h3>
 
-<button
-className="btn btn-primary add-device-btn"
-onClick={() => setShow(true)}
->
+<button className="btn btn-primary" onClick={() => setShow(true)}>
 + Add Device
 </button>
 
@@ -172,66 +171,67 @@ onClick={() => setShow(true)}
 
 <div className="device-grid">
 
-{enrolledDevices.length === 0 && (
-<p className="text-muted">No devices connected</p>
-)}
+{enrolledDevices.length === 0 ? (
+<p>No devices connected</p>
+) : (
 
-{enrolledDevices.map((device) => (
+enrolledDevices.map((device) => (
 
-<div className="device-card" key={device.enDevID}>
+<div className="device-card" key={device.id}>
 
 <div className="device-icon">
 {getDeviceIcon(device.type)}
 </div>
 
 <div className="device-name">
-{device.enDevName}
+{device.name}
 </div>
 
 <div className="device-room">
 {device.type} • {device.model}
 </div>
 
-<div className="d-flex justify-content-between align-items-center mt-3">
+<div className="d-flex justify-content-between mt-3">
 
 <span>
-{device.enrolledStatus === "enabled" ? "On" : "Off"}
+{device.status === "enabled" ? "On" : "Off"}
 </span>
 
 <label className="switch">
-
 <input
 type="checkbox"
-checked={device.enrolledStatus === "enabled"}
-onChange={() => toggleStatus(device.enDevID)}
+checked={device.status === "enabled"}
+onChange={() => toggleStatus(device.id)}
 />
-
 <span className="slider"></span>
-
 </label>
 
 </div>
 
 <button
 className="btn btn-danger btn-sm mt-3"
-onClick={() => handleDelete(device.enDevID)}
+onClick={() => handleDelete(device.id)}
 >
 Remove
 </button>
 
 </div>
 
-))}
+))
+
+)}
 
 </div>
 
+
+{/* MODAL */}
 
 <Modal show={show} onHide={() => setShow(false)} centered>
 
 <form onSubmit={handleSubmitButton}>
 
 <Modal.Header closeButton>
-<Modal.Title>Add New Device</Modal.Title>
+<Modal.Title>Add Device</Modal.Title>
 </Modal.Header>
 
 <Modal.Body>
@@ -252,15 +252,9 @@ value={deviceFormData.type}
 onChange={handleChange}
 required
 >
-
-<option value="">Select Device Type</option>
-
-{deviceTypes.map((type,index) => (
-<option key={index}>{type}</option>
-))}
-
+<option value="">Select Type</option>
+{deviceTypes.map((t,i) => <option key={i}>{t}</option>)}
 </select>
-
 
 <select
 className="form-select"
@@ -269,29 +263,20 @@ value={deviceFormData.model}
 onChange={handleChange}
 required
 >
-
 <option value="">Select Model</option>
-
-{deviceModels.map((model,index) => (
-<option key={index}>{model}</option>
-))}
-
+{deviceModels.map((m,i) => <option key={i}>{m}</option>)}
 </select>
 
 </Modal.Body>
 
 <Modal.Footer>
 
-<button
-className="btn btn-secondary"
-type="button"
-onClick={() => setShow(false)}
->
+<button className="btn btn-secondary" onClick={() => setShow(false)}>
 Cancel
 </button>
 
 <button className="btn btn-primary" type="submit">
-Add Device
+Add
 </button>
 
 </Modal.Footer>
